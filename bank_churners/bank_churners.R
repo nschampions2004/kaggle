@@ -105,7 +105,7 @@ bank_xgb <- boost_tree(
   stop_iter = 50,
   mode = "regression"
 ) %>%
-  set_engine("xgboost", nthread = 11)
+  set_engine("xgboost") # , nthread = 11 THIS WORKS
 
 bank_lm_wf <- workflow() %>%
   add_formula(formula = Credit_Limit ~ . - CLIENTNUM) %>%
@@ -134,7 +134,7 @@ rf_tune_grid <- tune_grid(object = bank_rf_wf,
   grid = 8,
   control = control_grid(save_pred = T, verbose = T))
 
-# doParallel::registerDoParallel()
+doParallel::registerDoParallel(11)
 xgb_tune_grid <- tune_grid(object = bank_xgb_wf,
   resamples = bank_folds_rf,
   grid = 8,
