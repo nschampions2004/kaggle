@@ -133,7 +133,11 @@ hr_recipe <- recipes::recipe(target ~ ., aug_data) %>%
   step_dummy(company_size, one_hot = T) %>%
   step_dummy(company_type, one_hot = T) %>%
   step_dummy(last_new_job, one_hot = T) %>%
-  themis::step_smote(target, over_ratio = 0.5)
+  step_mutate(target = as.factor(target),
+              city_development_index = as.numeric(city_development_index)) %>%
+  themis::step_smote(target, over_ratio = 0.5) %>%
+  prep()
+
 
 # 1 city
 # 2 gender
@@ -145,11 +149,11 @@ hr_recipe <- recipes::recipe(target ~ ., aug_data) %>%
 # 8 company_size
 # 9 company_type
 # 10 last_new_job
-hr_preprocess <- prep(hr_recipe)
 
-hr_train <- bake(hr_preprocess, aug_data)
 
-hr_test <- bake(hr_preprocess, aug_test)
+hr_train <- bake(hr_recipe, aug_data)
+
+hr_test <- bake(hr_recipe, aug_test)
 
 
 # workflow

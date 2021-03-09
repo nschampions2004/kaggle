@@ -174,8 +174,6 @@ best_xgb <- bank_xgb %>%
 
 
 # so, linear model penalized down to two features
-#
-
 
 best_lm %>%
   tidy() %>%
