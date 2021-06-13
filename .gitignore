@@ -1,6 +1,6 @@
 # Resources file shouldnt be tracked
 /ion_switching/resources/
-
+/austin_housing/data/
 # History files
 .Rhistory
 .Rapp.history
